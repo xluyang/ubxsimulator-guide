@@ -1,0 +1,9 @@
+# 日志文件
+*.log
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# Windows 下载标记
+*Zone.Identifier

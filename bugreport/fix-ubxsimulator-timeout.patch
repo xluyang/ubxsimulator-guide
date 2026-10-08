@@ -1,0 +1,18 @@
+Fix ubxsimulator.read() raising TimeoutError immediately on first read
+
+`_lastread` was initialized to datetime.fromordinal(1) (year 1), so the
+timeout check in read() was always true on the first read with an empty
+buffer, raising TimeoutError immediately instead of waiting for the
+configured timeout.
+
+--- a/pyubxutils/ubxsimulator.py
++++ b/pyubxutils/ubxsimulator.py
+@@ -109,7 +109,7 @@
+         self._buffer = b""
+         self._mainloop_thread = None
+         self._msgfactory_thread = None
+-        self._lastread = datetime.fromordinal(1)
++        self._lastread = datetime.now()
+         self._loops = 0
+ 
+     def _readconfig(self, cfile: str) -> dict:
